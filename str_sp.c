@@ -18,9 +18,10 @@ int _putc(char c)
  */
 int _putstr(char *s)
 {
-	int len;
+	int len = 0;
 
 	if (s == NULL)
 		s = "(null)";
 	len = len + printstr(s);
+	return (len);
 }

@@ -8,8 +8,7 @@
  */
 int _switch(char traverse, va_list arg)
 {
-	int i, len = 0;
-	char *s;
+	int len = 0;
 
 	switch (traverse)
 		{
@@ -17,7 +16,7 @@ int _switch(char traverse, va_list arg)
 				len = len + _putc(va_arg(arg, int));
 				break;
 			case 's':
-				len = len + _putstr(va_arg(arg, const char *));
+				len = len + _putstr(va_arg(arg, char *));
 				break;
 			case '%':
 				putchar('%');
