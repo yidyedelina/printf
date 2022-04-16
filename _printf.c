@@ -45,8 +45,7 @@ char *convert(unsigned int num, int base)
 int _printf(const char *format, ...)
 {
 	const char *traverse;
-	int len = 0;
-	int i;
+	int len = 0, i;
 	char *s;
 	va_list arg;
 
@@ -61,6 +60,8 @@ int _printf(const char *format, ...)
 			len++;
 			traverse++;
 		}
+		if (*traverse == '\0')
+			break;
 		traverse++;
 		switch (*traverse)
 		{
@@ -71,6 +72,8 @@ int _printf(const char *format, ...)
 				break;
 			case 's':
 				s = va_arg(arg, char *);
+				if (s == NULL)
+					return (0);
 				len = len + printstr(s);
 				break;
 			case '%':
@@ -78,7 +81,10 @@ int _printf(const char *format, ...)
 				len++;
 				break;
 			default:
+				putchar('%');
 				putchar(*traverse);
+				len = len + 2;
+				break;
 		}
 	}
 	va_end(arg);
