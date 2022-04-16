@@ -14,15 +14,10 @@ int _switch(char traverse, va_list arg)
 	switch (traverse)
 		{
 			case 'c':
-				i = va_arg(arg, int);
-				putchar(i);
-				len++;
+				len = len + _putc(va_arg(arg, int));
 				break;
 			case 's':
-				s = va_arg(arg, char *);
-				if (s == NULL)
-					s = "(null)";
-				len = len + printstr(s);
+				len = len + _putstr(va_arg(arg, const char *));
 				break;
 			case '%':
 				putchar('%');
