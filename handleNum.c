@@ -26,12 +26,16 @@ int printdec(int n)
  */
 int printnum(char traverse, int n)
 {
+    int len = 0;
     switch (traverse)
     {
-        case 'd':
-            return (printdec(n));
-        case 'i':
-            return (printdec(n));
+    case 'd':
+        return (printdec(n));
+    case 'i':
+        return (printdec(n));
+    case 'b':
+        len = len + printstr(convert(n, 2));
+        return (len);
     }
     return (0);
 }
