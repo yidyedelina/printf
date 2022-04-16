@@ -1,5 +1,5 @@
 #include "stdio.h"
-#include "stdarg.h"
+#include "main.h"
 /**
  * printstr - a function that print string
  * @s: a string to be printed
@@ -48,11 +48,10 @@ int _printf(const char *format, ...)
 	int len = 0;
 	int i;
 	char *s;
-
-	if (format == NULL)
-		return;
 	va_list arg;
 
+	if (format == NULL)
+		return (0);
 	va_start(arg, format);
 	for (traverse = format; *traverse != '\0'; traverse++)
 	{
