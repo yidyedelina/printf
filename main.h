@@ -8,6 +8,7 @@ int _putc(char c);
 int _putstr(char *s);
 int printnum(char traverse, int n);
 char *convert(unsigned int num, int base);
+int _putStr(char *s);
 
 #endif
 

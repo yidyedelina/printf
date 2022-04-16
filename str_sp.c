@@ -25,3 +25,24 @@ int _putstr(char *s)
 	len = len + printstr(s);
 	return (len);
 }
+int _putStr(char *s)
+{
+	int len = 0;
+	while (*s != '\0')
+	{
+		if (*s > 0 && *s < 32)
+		{
+			putchar('\\');
+			putchar('x');
+			len = len + printstr(convert(*s, 16));
+			len = len + 2;
+		}
+		else
+		{
+			putchar(*s);
+			len++;
+		}
+		s++;
+	}
+	return (len);
+}
