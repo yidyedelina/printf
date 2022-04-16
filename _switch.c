@@ -22,6 +22,12 @@ int _switch(char traverse, va_list arg)
 				putchar('%');
 				len++;
 				break;
+			case 'd':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
+			case 'i':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
 			default:
 				putchar('%');
 				putchar(traverse);
