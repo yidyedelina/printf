@@ -31,6 +31,18 @@ int _switch(char traverse, va_list arg)
 			case 'b':
 				len = len + printnum(traverse, va_arg(arg, int));
 				break;
+			case 'u':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
+			case 'o':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
+			case 'x':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
+			case 'X':
+				len = len + printnum(traverse, va_arg(arg, int));
+				break;
 			default:
 				putchar('%');
 				putchar(traverse);
