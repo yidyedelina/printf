@@ -3,4 +3,4 @@
 int _printf(const char *format, ...);
 
 
-#endif // PRINTF_H
+#endif
