@@ -23,6 +23,8 @@ int _putstr(char *s)
 
 	if (s == NULL)
 		s = "(null)";
+	else if (*s == '\0')
+		return (-1);
 	len = len + printstr(s);
 	return (len);
 }
