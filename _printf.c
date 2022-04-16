@@ -55,6 +55,8 @@ int _printf(const char *format, ...)
 	{
 		while (*traverse != '%' && *traverse != '\0')
 		{
+			if (*traverse == '\0')
+				return (-1);
 			putchar(*traverse);
 			len++;
 			traverse++;
