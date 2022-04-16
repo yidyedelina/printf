@@ -39,7 +39,9 @@ int _putStr(char *s)
 	char *p;
 
 	if (s == NULL)
-		s = "00";
+		s = "(null)";
+	else if (*s == '\0')
+		return (-1);
 	while (*s != '\0')
 	{
 		if ((*s > 0 && *s < 32) || *s >= 127)
@@ -47,16 +49,12 @@ int _putStr(char *s)
 			putchar('\\');
 			putchar('x');
 			p = convert(*s, 16);
-			if (strlen(p) == 2)
-			{
-				len += printstr(s);
-			}
-			else
+			if (*s < 16)
 			{
 				putchar('0');
-				putchar(*p);
-				len = len + 2;
+				len++;
 			}
+			len = len + printstr(p);
 		}
 		else
 		{
