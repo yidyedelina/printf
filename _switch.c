@@ -21,7 +21,7 @@ int _switch(char traverse, va_list arg)
 			case 's':
 				s = va_arg(arg, char *);
 				if (s == NULL)
-					return (0);
+					s = "(null)";
 				len = len + printstr(s);
 				break;
 			case '%':
