@@ -53,8 +53,8 @@ int _putStr(char *s)
 			{
 				putchar('0');
 				putchar(*p);
+				len = len + 2;
 			}
-			len = len + 2;
 		}
 		else
 		{
