@@ -1,10 +1,9 @@
 #include "stdio.h"
 #include "stdarg.h"
 /**
- * printstr - print character
- * 
- * @param s: the string character
- * @return int 
+ * printstr - a function that print string
+ * @s: a string to be printed
+ * Return: always integer
  */
 int printstr(char *s)
 {
@@ -16,36 +15,32 @@ int printstr(char *s)
 		s++;
 		len++;
 	}
-	return len;
+	return (len);
 }
 /**
- * @brief the function that converts strings
- * 
- * @param num 
- * @param base 
- * @return char* 
+ * convert - convert any number to string
+ * @num: the number need to convert
+ * @base: the base
+ * Return: a char*
  */
-char *convert(unsigned int num,int base)
+char *convert(unsigned int num, int base)
 {
-	static char Representation[] = "0123456789ABCDEF";
+	static const char Representation[] = "0123456789ABCDEF";
 	static char buffer[65];
 	char *ptr;
 
 	ptr = &buffer[64];
 	*ptr = '\0';
-	do
-	{
+	do {
 		*--ptr =  Representation[num % base];
 		num /= base;
-	}while(num != 0);
+	} while (num != 0);
 	return (ptr);
 }
 /**
- * @brief 
- * 
- * @param format 
- * @param ... 
- * @return int 
+ * _printf - a function to print a string
+ * @format: a str
+ * Return: the length of printed
  */
 int _printf(const char *format, ...)
 {
@@ -53,6 +48,9 @@ int _printf(const char *format, ...)
 	int len = 0;
 	int i;
 	char *s;
+
+	if (format == NULL)
+		return;
 	va_list arg;
 
 	va_start(arg, format);
@@ -80,67 +78,10 @@ int _printf(const char *format, ...)
 				putchar('%');
 				len++;
 				break;
-			case 'd':
-				i = va_arg(arg, int);
-				if (i < 0)
-				{
-					i = i * (-1);
-					putchar('-');
-					len++;
-				}
-				len = len + printstr(convert(i, 10));
-				break;
-			case 'i':
-				i = va_arg(arg, int);
-				if (i < 0)
-				{
-					i = i * (-1);
-					putchar('-');
-					len++;
-				}
-				len = len + printstr(convert(i, 10));
-				break;
-			case 'b':
-				i = va_arg(arg, int);
-				len = len + printstr(convert(i, 2));
-				break;
-			case 'o':
-				i = va_arg(arg, int);
-				len = len + printstr(convert(i, 8));
-				break;
-			case 'x':
-				i = va_arg(arg, int);
-				len = len + printstr(convert(i, 16));
-				break;
-			case 'X':
-				i = va_arg(arg, int);
-				len = len + printstr(convert(i, 16));
-				break;
-			case 'u':
-				i = va_arg(arg, int);
-				if(i < 0)
-				{
-					i = -i;
-				}
-				len = len + printstr(convert(i, 10));
-				break;
-			case 'S':
-				s = va_arg(arg, char*);
-				while (*s != '\0')
-				{
-					if (*s > 0 && *s < 32)
-					{
-						putchar('\\');
-						putchar('x');
-						len = len + printstr(convert(*s, 16));
-						len = len + 2;
-					}
-					putchar(*s);
-					s++;
-				}
-				break;
+			default:
+				putchar(*traverse);
 		}
 	}
 	va_end(arg);
-	return len;
+	return (len);
 }
