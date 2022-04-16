@@ -37,7 +37,7 @@ int _putStr(char *s)
 	char *p;
 
 	if (s == NULL)
-		s = "(null)";
+		s = "00";
 	while (*s != '\0')
 	{
 		if (*s > 0 && *s < 32)
