@@ -9,6 +9,7 @@ int _putstr(char *s);
 int printnum(char traverse, int n);
 char *convert(unsigned int num, int base);
 int _putStr(char *s);
+int print_p(unsigned long n);
 
 #endif
 

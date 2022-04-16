@@ -1,6 +1,7 @@
 #include "main.h"
 #include "stdio.h"
 #include "string.h"
+#include <math.h>
 /**
  * printdec - print decimal number
  * @n: an integer
@@ -73,4 +74,50 @@ int printnum(char traverse, int n)
 		return (len);
 	}
 	return (0);
+}
+/**
+ * print_p - print the memory address
+ * n: AN ADDREESS
+ * Return: int
+ */
+int print_p(unsigned long n)
+{
+	int count = 0;
+	unsigned int a[16];
+	unsigned int i, sum;
+	unsigned long m;
+	char *str = "(nil)";
+
+	if (n == 0)
+	{
+		for (i = 0; str[i]; i++)
+		{
+			putchar(str[i]);
+			count++;
+		}
+		return (count);
+	}
+	putchar('0');
+	putchar('x');
+	count = 2;
+	m = pow(16, 15); /* 16 ^ 15 */
+	a[0] = n / m;
+	for (i = 1; i < 16; i++)
+	{
+		m /= 16;
+		a[i] = (n / m) % 16;
+	}
+	for (i = 0, sum = 0; i < 16; i++)
+	{
+		sum += a[i];
+		if (sum || i == 15)
+		{
+			if (a[i] < 10)
+				putchar('0' + a[i]);
+			else
+				putchar('0' + ('a' - ':') + a[i]);
+			count++;
+		}
+	}
+	return (count);
 }
