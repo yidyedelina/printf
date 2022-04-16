@@ -133,15 +133,12 @@ int _printf(const char *format, ...)
 						putchar('\\');
 						putchar('x');
 						len = len + printstr(convert(*s, 16));
-						len + 2;
+						len = len + 2;
 					}
 					putchar(*s);
 					s++;
 				}
 				break;
-			case 'p':
-				s = va_arg(arg, int*);
-				printstr(s);
 		}
 	}
 	va_end(arg);
