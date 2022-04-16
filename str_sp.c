@@ -40,7 +40,7 @@ int _putStr(char *s)
 		s = "00";
 	while (*s != '\0')
 	{
-		if (*s > 0 && *s < 32 && *s >= 127)
+		if ((*s > 0 && *s < 32) || *s >= 127)
 		{
 			putchar('\\');
 			putchar('x');
