@@ -49,6 +49,12 @@ int _switch(char traverse, va_list arg)
 			case 'p':
 				len = len + print_p(va_arg(arg, unsigned long));
 				break;
+			case 'r':
+				len = len + print_rev(va_arg(arg, char*));
+				break;
+			case 'R':
+				len = len + print_R(va_arg(arg, char*));
+				break;
 			default:
 				putchar('%');
 				putchar(traverse);

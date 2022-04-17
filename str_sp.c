@@ -65,3 +65,59 @@ int _putStr(char *s)
 	}
 	return (len);
 }
+/**
+ * print_rev - print a string in a reverse order
+ * @s: a string variable
+ * Return: void
+ */
+
+int print_rev(char *s)
+{
+	int i, len;
+
+	if (s == NULL)
+		s = "(null)";
+	else if (*s == '\0')
+		return (-1);
+	len = strlen(s);
+	for (i = 1; i <= len; i++)
+	{
+		putchar(s[len - i]);
+	}
+	return (len);
+}
+
+/**
+ * print_R - prints a string in rot13
+ * @R: string to print
+ *
+ * Return: number of chars printed
+ */
+int print_R(char *str)
+{
+	unsigned int i, j;
+	int count = 0;
+	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+	if (str == NULL)
+		str = "(ahyy)";
+	for (i = 0; str[i]; i++)
+	{
+		for (j = 0; in[j]; j++)
+		{
+			if (in[j] == str[i])
+			{
+				putchar(out[j]);
+				count++;
+				break;
+			}
+		}
+		if (!in[j])
+		{
+			putchar(str[i]);
+			count++;
+		}
+	}
+	return (count);
+}

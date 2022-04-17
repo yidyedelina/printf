@@ -10,6 +10,9 @@ int printnum(char traverse, int n);
 char *convert(unsigned int num, int base);
 int _putStr(char *s);
 int print_p(unsigned long n);
+char *rot13(char *s);
+int print_rev(char *s);
+int print_R(char *str);
 
 #endif
 
