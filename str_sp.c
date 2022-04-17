@@ -41,14 +41,13 @@ int _putStr(char *s)
 
 	if (s == NULL)
 		s = "(null)";
-	else if (*s == '\0')
-		return (-1);
 	while (*s != '\0')
 	{
-		if ((*s > 0 && *s < 32) || *s >= 127)
+		if ((*s < 32) || *s >= 127)
 		{
 			putchar('\\');
 			putchar('x');
+			len = len + 2;
 			p = convert(*s, 16);
 			if (*s < 16)
 			{
