@@ -25,7 +25,7 @@ int _putstr(char *str)
 		str = "(null)";
 	for (count = 0; str[count]; count++)
 	{
-		_putchar(str[count]);
+		putchar(str[count]);
 	}
 	return (count);
 }
