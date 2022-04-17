@@ -13,7 +13,7 @@ int _switch(char traverse, va_list arg)
 	switch (traverse)
 		{
 			case 'c':
-				len = len + _putc(va_arg(arg, int));
+				len = len + _putc((char)va_arg(arg, int));
 				break;
 			case 's':
 				len = len + _putstr(va_arg(arg, char *));

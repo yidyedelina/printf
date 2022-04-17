@@ -17,16 +17,17 @@ int _putc(char c)
  * @s: a string
  * Return: integer always
  */
-int _putstr(char *s)
+int _putstr(char *str)
 {
-	int len = 0;
+	int count;
 
-	if (s == NULL)
-		s = "(null)";
-	else if (*s == '\0')
-		return (-1);
-	len = len + printstr(s);
-	return (len);
+	if (str == NULL)
+		str = "(null)";
+	for (count = 0; str[count]; count++)
+	{
+		_putchar(str[count]);
+	}
+	return (count);
 }
 /**
  * _putStr - print printable string
