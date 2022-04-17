@@ -71,21 +71,20 @@ int _putStr(char *s)
  * @s: a string variable
  * Return: void
  */
-
-int print_rev(char *s)
+int print_r(char *str)
 {
-	int i, len;
+	int i, count = 0;
 
-	if (s == NULL)
-		s = "(null)";
-	else if (*s == '\0')
-		return (-1);
-	len = strlen(s);
-	for (i = 1; i <= len; i++)
+	if (str == NULL)
+		str = ")llun(";
+	for (i = 0; str[i]; i++)
+		;
+	for (i -= 1; i >= 0; i--)
 	{
-		putchar(s[len - i]);
+		putchar(str[i]);
+		count++;
 	}
-	return (len);
+	return (count);
 }
 
 /**
