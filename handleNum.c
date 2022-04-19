@@ -1,123 +1,83 @@
 #include "main.h"
-#include "stdio.h"
-#include "string.h"
-#include <math.h>
-/**
- * printdec - print decimal number
- * @n: an integer
- * Return: nteger;
- */
-int printdec(int n)
-{
-	int len = 0;
 
-	if (n < 0)
-	{
-		n = n * (-1);
-		putchar('-');
-		len++;
-	}
-	len = len + printstr(convert(n, 10));
-	return (len);
-}
 /**
- * convert2 - change any lower case letter to uppercase letter
- * @num: a number
- * @base: base;
- * Return: return a char pointer
+ * convert - converter function, a clone of itoa
+ * @num: number
+ * @base: base
+ * @flags: argument flags
+ * @params: paramater struct
+ *
+ * Return: string
  */
-char *convert2(unsigned int num, int base)
+char *convert(long int num, int base, int flags, params_t *params)
 {
-	static const char Representation[] = "0123456789abcdef";
-	static char buffer[65];
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
 	char *ptr;
+	unsigned long n = num;
+	(void)params;
 
-	ptr = &buffer[64];
+	if (!(flags & CONVERT_UNSIGNED) && num < 0)
+	{
+		n = -num;
+		sign = '-';
+
+	}
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
 	*ptr = '\0';
-	do {
-		*--ptr = Representation[num % base];
-		num /= base;
-	} while (num != 0);
+
+	do	{
+		*--ptr = array[n % base];
+		n /= base;
+	} while (n != 0);
+
+	if (sign)
+		*--ptr = sign;
 	return (ptr);
 }
 
 /**
- * printNum - print numbers
- * @traverse: a specifier
- * @n: a number
- * Return: the length of the number printed
+ * print_unsigned - prints unsigned integer numbers
+ * @ap: argument pointer
+ * @params: the parameters struct
+ *
+ * Return: bytes printed
  */
-int printnum(char traverse, int n)
+int print_unsigned(va_list ap, params_t *params)
 {
-	int len = 0;
+	unsigned long l;
 
-	switch (traverse)
-	{
-	case 'd':
-		return (printdec(n));
-	case 'i':
-		return (printdec(n));
-	case 'b':
-		len = len + printstr(convert(n, 2));
-		return (len);
-	case 'o':
-		len = len + printstr(convert(n, 8));
-		return (len);
-	case 'X':
-		len = len + printstr(convert(n, 16));
-		return (len);
-	case 'u':
-		len = len + printstr(convert(n, 10));
-		return (len);
-	case 'x':
-		len = len + printstr(convert2(n, 16));
-		return (len);
-	}
-	return (0);
+	if (params->l_modifier)
+		l = (unsigned long)va_arg(ap, unsigned long);
+	else if (params->h_modifier)
+		l = (unsigned short int)va_arg(ap, unsigned int);
+	else
+		l = (unsigned int)va_arg(ap, unsigned int);
+	params->unsign = 1;
+	return (print_number(convert(l, 10, CONVERT_UNSIGNED, params), params));
 }
-/**
- * print_p - print the memory address
- * n: AN ADDREESS
- * Return: int
- */
-int print_p(unsigned long n)
-{
-	int count = 0;
-	unsigned int a[16];
-	unsigned int i, sum;
-	unsigned long m;
-	char *str = "(nil)";
 
-	if (n == 0)
-	{
-		for (i = 0; str[i]; i++)
-		{
-			putchar(str[i]);
-			count++;
-		}
-		return (count);
-	}
-	putchar('0');
-	putchar('x');
-	count = 2;
-	m = pow(16, 15); /* 16 ^ 15 */
-	a[0] = n / m;
-	for (i = 1; i < 16; i++)
-	{
-		m /= 16;
-		a[i] = (n / m) % 16;
-	}
-	for (i = 0, sum = 0; i < 16; i++)
-	{
-		sum += a[i];
-		if (sum || i == 15)
-		{
-			if (a[i] < 10)
-				putchar('0' + a[i]);
-			else
-				putchar('0' + ('a' - ':') + a[i]);
-			count++;
-		}
-	}
-	return (count);
+
+
+/**
+ * print_address - prints address
+ * @ap: argument pointer
+ * @params: the parameters struct
+ *
+ * Return: bytes printed
+ */
+int print_address(va_list ap, params_t *params)
+{
+	unsigned long int n = va_arg(ap, unsigned long int);
+	char *str;
+
+	if (!n)
+		return (_puts("(nil)"));
+
+	str = convert(n, 16, CONVERT_UNSIGNED | CONVERT_LOWERCASE, params);
+	*--str = 'x';
+	*--str = '0';
+	return (print_number(str, params));
 }

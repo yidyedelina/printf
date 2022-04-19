@@ -1,71 +1,49 @@
-#include "stdio.h"
 #include "main.h"
-/**
- * printstr - a function that print string
- * @s: a string to be printed
- * Return: always integer
- */
-int printstr(char *s)
-{
-	int len = 0;
 
-	while (*s != '\0')
-	{
-		putchar(*s);
-		s++;
-		len++;
-	}
-	return (len);
-}
 /**
- * convert - convert any number to string
- * @num: the number need to convert
- * @base: the base
- * Return: a char*
- */
-char *convert(unsigned int num, int base)
-{
-	static const char Representation[] = "0123456789ABCDEF";
-	static char buffer[65];
-	char *ptr;
-
-	ptr = &buffer[64];
-	*ptr = '\0';
-	do {
-		*--ptr =  Representation[num % base];
-		num /= base;
-	} while (num != 0);
-	return (ptr);
-}
-/**
- * _printf - a function to print a string
- * @format: a str
- * Return: the length of printed
+ * _printf - prints anything
+ * @format: the format string
+ *
+ * Return: number of bytes printed
  */
 int _printf(const char *format, ...)
 {
-	const char *traverse;
-	int len = 0;
-	va_list arg;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	if (format == NULL)
+	va_start(ap, format);
+
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-	va_start(arg, format);
-	for (traverse = format; *traverse != '\0'; traverse++)
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-		while (*traverse != '%' && *traverse != '\0')
+		init_params(&params, ap);
+		if (*p != '%')
 		{
-			if (*traverse == '\0')
-				return (-1);
-			putchar(*traverse);
-			len++;
-			traverse++;
+			sum += _putchar(*p);
+			continue;
 		}
-		if (*traverse == '\0')
-			break;
-		traverse++;
-		len = len + _switch(*traverse, arg);
+		start = p;
+		p++;
+		while (get_flag(p, &params)) /* while char at p is flag char */
+		{
+			p++; /* next char */
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+				params.l_modifier || params.h_modifier ? p - 1 : 0);
+		else
+			sum += get_print_func(p, ap, &params);
 	}
-	va_end(arg);
-	return (len);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
